@@ -23,7 +23,7 @@
     const imageFile = fileProxy(formData, "image");
 </script>
 
-<form method="POST" enctype="multipart/form-data" use:enhance>
+<form method="POST" enctype="multipart/form-data" use:enhance class="flex flex-col justify-center items-center gap-4">
     <Form.Field {form} name="image">
         <Form.Control let:attrs>
             <Form.Label>Image</Form.Label>
@@ -37,7 +37,7 @@
             <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
             Rating...
         {:else}
-            Rate
+            Rate my aura
         {/if}
     </Form.Button>
 </form>
