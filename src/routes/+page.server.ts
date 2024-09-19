@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from "./$types";
-import { superValidate, message, fail } from "sveltekit-superforms";
+import { superValidate, fail, withFiles } from "sveltekit-superforms";
 import { rateFormSchema } from "./schema";
 import { zod } from "sveltekit-superforms/adapters";
 import { ACCOUNT_ID, API_KEY } from "$env/static/private";
@@ -56,6 +56,6 @@ export const actions: Actions = {
         const rating = ratingResponse.result.response;
         console.log("Rating: " + rating);
 
-        return message(rateForm, "Posted OK!");
+        return withFiles({ rateForm, rating });
     },
 };
