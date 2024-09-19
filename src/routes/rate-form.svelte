@@ -9,14 +9,16 @@
         fileProxy,
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
+    import LoaderCircle from "lucide-svelte/icons/loader-circle";
 
     export let data: SuperValidated<Infer<RateFormSchema>>;
 
     const form = superForm(data, {
         validators: zodClient(rateFormSchema),
+        delayMs: 100,
     });
 
-    const { form: formData, enhance } = form;
+    const { form: formData, enhance, delayed } = form;
 
     const imageFile = fileProxy(formData, "image");
 </script>
@@ -30,5 +32,12 @@
         <Form.Description>Upload an image to rate.</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
-    <Form.Button>Submit</Form.Button>
+    <Form.Button disabled={$delayed}>
+        {#if $delayed}
+            <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
+            Rating...
+        {:else}
+            Rate
+        {/if}
+    </Form.Button>
 </form>
