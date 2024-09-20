@@ -20,24 +20,37 @@
 
     const { form: formData, enhance, delayed } = form;
 
-    const imageFile = fileProxy(formData, "image");
+    const imageFiles = fileProxy(formData, "image");
+    let imageURL: string = "";
+    imageFiles.subscribe((files) => {
+        if (files[0]) {
+            imageURL = URL.createObjectURL(files[0]);
+        };
+    });
 </script>
 
-<form method="POST" enctype="multipart/form-data" use:enhance class="flex flex-col justify-center items-center gap-4">
-    <Form.Field {form} name="image">
-        <Form.Control let:attrs>
-            <Form.Label>Image</Form.Label>
-            <input {...attrs} type="file" bind:files={$imageFile} />
-        </Form.Control>
-        <Form.Description>Upload an image to rate.</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field>
-    <Form.Button disabled={$delayed}>
-        {#if $delayed}
-            <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
-            Rating...
-        {:else}
-            Rate my aura
-        {/if}
-    </Form.Button>
-</form>
+<div class="flex flex-col justify-center items-center gap-4">
+    {#if imageURL}
+        <img src={imageURL} alt="Uploaded" class="w-64 h-64 object-contain" />
+    {:else}
+        <div class="w-64 h-64 border rounded-lg"></div>
+    {/if}
+    <form method="POST" enctype="multipart/form-data" use:enhance class="flex flex-col justify-center items-center gap-4">
+        <Form.Field {form} name="image">
+            <Form.Control let:attrs>
+                <Form.Label>Image</Form.Label>
+                <input {...attrs} type="file" bind:files={$imageFiles} />
+            </Form.Control>
+            <Form.Description>Upload an image to rate.</Form.Description>
+            <Form.FieldErrors />
+        </Form.Field>
+        <Form.Button disabled={$delayed}>
+            {#if $delayed}
+                <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
+                Rating...
+            {:else}
+                Rate my aura
+            {/if}
+        </Form.Button>
+    </form>
+</div>
