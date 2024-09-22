@@ -34,7 +34,7 @@ export const actions: Actions = {
         };
         const imageInput = {
             image: [...new Uint8Array(imageBlob)],
-            prompt: "Generate a very detailed description of the person in the image. Make it very detailed, mention every single little detail, including but not limited to the person's facial features, and the person's looks and general style, and every single little facial feature in detail like face shape, eye color, hair style, hair color, build, and clothing item the person has. If there is no person in the image, say error",
+            prompt: "Generate a description of the person in the image. Make it very detailed, mention every single little detail, including but not limited to the person's facial features, and the person's looks and general style, accessories, and every single little facial feature in detail like face shape, eye color, hair style, hair color, build, and clothing item the person has. If there is no person in the image, say error",
             max_tokens: 512,
         };
         const imageDescriptionResponse = await run("@cf/llava-hf/llava-1.5-7b-hf", imageInput);
@@ -49,9 +49,16 @@ export const actions: Actions = {
             ],
         };
         const ratingResponse = await run("@hf/google/gemma-7b-it", ratingInput);
-        const rating = ratingResponse.result.response;
-        console.log("Rating: " + rating);
+        const ratingString = ratingResponse.result.response;
+        const ratingNum = ratingString.match(/\d+\.\d{2}/);
+        const ratingReasoning = ratingString.split('%')[1].trim();
+        console.log("Rating: " + ratingNum);
+        console.log("Reasoning: " + ratingReasoning);
 
-        return withFiles({ rateForm, rating });
+        return withFiles({
+            rateForm,
+            rating: ratingNum,
+            ratingReasoning: ratingReasoning,
+        });
     },
 };
