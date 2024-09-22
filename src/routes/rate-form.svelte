@@ -12,6 +12,7 @@
     import { zodClient } from "sveltekit-superforms/adapters";
     import * as Alert from "$lib/components/ui/alert";
     import { Skeleton } from "$lib/components/ui/skeleton";
+    import Gauge from "$lib/components/Gauge.svelte";
     import LoaderCircle from "lucide-svelte/icons/loader-circle";
     import Sparkles from "lucide-svelte/icons/sparkles";
 
@@ -59,22 +60,23 @@
         </Form.Button>
     </form>
     {#if $delayed}
-        <Alert.Root class="max-w-96">
+        <Alert.Root class="flex flex-col gap-2 max-w-96">
             <Sparkles class="h-4 w-4" />
             <Alert.Title>
-                <Skeleton class="h-4 w-32 mb-2" />
+                <Skeleton class="h-4 w-32" />
             </Alert.Title>
-            <Alert.Description>
-                <Skeleton class="h-4 w-full mb-2" />
+            <Alert.Description class="flex flex-col gap-2">
+                <Skeleton class="h-4 w-full" />
                 <Skeleton class="h-4 w-full" />
             </Alert.Description>
         </Alert.Root>
     {:else if form && form.rating}
-        <Alert.Root class="max-w-96">
+        <Alert.Root class="flex flex-col gap-2 max-w-96">
             <Sparkles class="h-4 w-4" />
             <Alert.Title>
                 Rating: {form.rating}%
             </Alert.Title>
+            <Gauge value={form.rating} max={100} />
             <Alert.Description>
                 AI's Reasoning: {form.ratingReasoning}
             </Alert.Description>
