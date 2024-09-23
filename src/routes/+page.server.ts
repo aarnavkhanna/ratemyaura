@@ -44,7 +44,7 @@ export const actions: Actions = {
             messages: [
                 {
                     role: "user",
-                    content: "You are an aura rater. Aura is how good a person looks. You will be given an image description and based on that image description, rate how good the person looks using a percentage to the closest two decimal points. Don't estimate, don't round. Don't be afraid to roast aspects of the person that are bad, so give them a low rating if they can improve on something, and give them a high rating if they have good aura. Only return the percentage followed by your reasoning for the aura rating. Also, don't use any formatting in the response. This is an example response: '69.42% This is my reasoning.' This is the image description: " + imageDescription,
+                    content: "You are an aura rater. Aura is how good a person looks. You will be given an image description and based on that image description, rate how good the person looks using a percentage to the closest two decimal points. Don't estimate, don't round. Don't be afraid to roast aspects of the person that are bad, so give them a low rating if they can improve on something, and give them a high rating if they have good aura. Only return the percentage followed by your reasoning for the aura rating, and reason for why you took off any points and why they didn't get 100 and how they can improve. Also, don't use any formatting in the response. This is an example response: '69.42% This is my reasoning.' This is the image description: " + imageDescription,
                 },
             ],
         };
