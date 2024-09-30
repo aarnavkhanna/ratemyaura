@@ -14,6 +14,7 @@
     import { zodClient } from "sveltekit-superforms/adapters";
     import * as Alert from "$lib/components/ui/alert";
     import { Skeleton } from "$lib/components/ui/skeleton";
+    import { toast } from "svelte-sonner";
     import Gauge from "$lib/components/Gauge.svelte";
     import LoaderCircle from "lucide-svelte/icons/loader-circle";
     import Sparkles from "lucide-svelte/icons/sparkles";
@@ -24,6 +25,9 @@
     const rateForm = superForm(data, {
         validators: zodClient(rateFormSchema),
         delayMs: 100,
+        onError() {
+            toast.error("Something went wrong, please try again later");
+        },
     });
 
     const { form: formData, enhance, delayed } = rateForm;
