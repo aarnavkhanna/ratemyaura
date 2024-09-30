@@ -1,5 +1,7 @@
 <script lang="ts">
     import type { ActionData } from "./$types";
+    import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
     import { rateFormSchema, type RateFormSchema } from "./schema";
@@ -37,17 +39,15 @@
 
 <div class="flex flex-col justify-center items-center gap-4">
     {#if imageURL}
-        <img src={imageURL} alt="Uploaded" class="w-64 h-64 object-contain" />
-    {:else}
-        <div class="w-64 h-64 border rounded-lg"></div>
+        <img src={imageURL} alt="Uploaded" class="w-96 h-auto object-contain border border-dashed rounded-lg p-4" transition:slide={{ delay: 250, duration: 300, easing: quintOut, axis: 'x' }} />
     {/if}
     <form method="POST" enctype="multipart/form-data" use:enhance class="flex flex-col justify-center items-center gap-4">
         <Form.Field form={rateForm} name="image">
             <Form.Control let:attrs>
                 <Form.Label>Image</Form.Label>
-                <input {...attrs} type="file" bind:files={$imageFiles} class="flex w-full text-sm border rounded-md px-3 py-2 file:bg-transparent file:text-foreground file:font-medium file:border-0" />
+                <input {...attrs} type="file" accept=".png, .jpg, .jpeg" bind:files={$imageFiles} class="flex w-full text-sm border rounded-md px-3 py-2 file:bg-transparent file:text-foreground file:font-medium file:border-0" />
             </Form.Control>
-            <Form.Description>Upload an image to rate.</Form.Description>
+            <Form.Description>Note: only png, jpg, and jpeg are accepted.</Form.Description>
             <Form.FieldErrors />
         </Form.Field>
         <Form.Button disabled={$delayed}>
