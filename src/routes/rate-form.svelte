@@ -45,7 +45,7 @@
         <Form.Field form={rateForm} name="image">
             <Form.Control let:attrs>
                 <Form.Label>Image</Form.Label>
-                <input {...attrs} type="file" bind:files={$imageFiles} />
+                <input {...attrs} type="file" bind:files={$imageFiles} class="flex w-full text-sm border rounded-md px-3 py-2 file:bg-transparent file:text-foreground file:font-medium file:border-0" />
             </Form.Control>
             <Form.Description>Upload an image to rate.</Form.Description>
             <Form.FieldErrors />
