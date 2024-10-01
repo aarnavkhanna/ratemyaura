@@ -39,7 +39,7 @@ export const actions: Actions = {
         };
         const imageDescriptionResponse = await run("@cf/llava-hf/llava-1.5-7b-hf", imageInput);
         const imageDescription = imageDescriptionResponse.result.description;
-        console.log("Image description: " + imageDescription);
+        // console.log("Image description: " + imageDescription);
         const ratingInput = {
             messages: [
                 {
@@ -52,8 +52,8 @@ export const actions: Actions = {
         const ratingString = ratingResponse.result.response;
         const ratingNum = ratingString.match(/\d+\.\d{2}/);
         const ratingReasoning = ratingString.split('%')[1].trim();
-        console.log("Rating: " + ratingNum);
-        console.log("Reasoning: " + ratingReasoning);
+        // console.log("Rating: " + ratingNum);
+        // console.log("Reasoning: " + ratingReasoning);
 
         return withFiles({
             rateForm,
